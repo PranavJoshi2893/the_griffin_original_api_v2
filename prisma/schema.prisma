@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model product_gender {
+  pgid             Int                @id @default(autoincrement())
+  gender_name      String             @unique @db.VarChar(10)
+  product_category product_category[]
+}
+
+model product_category {
+  pcid              Int            @id @default(autoincrement())
+  product_gender_id Int
+  category_name     String         @db.VarChar(100)
+  product_gender    product_gender @relation(fields: [product_gender_id], references: [pgid])
+  product           product[]
+}
+
+model product {
+  pid                 Int              @id @default(autoincrement())
+  product_name        String           @db.VarChar(500)
+  product_category_id Int
+  product_category    product_category @relation(fields: [product_category_id], references: [pcid])
+  product_item        product_item[]
+}
+
+model product_image {
+  piid            Int          @id @default(autoincrement())
+  image_filename  String       @db.VarChar(400)
+  product_item_id Int
+  product_item    product_item @relation(fields: [product_item_id], references: [piid])
+}
+
+model colour {
+  cid          Int            @id @default(autoincrement())
+  color_name   String
+  product_item product_item[]
+}
+
+model product_item {
+  piid           Int     @id @default(autoincrement())
+  original_price Int
+  sale_price     Int
+  product_id     Int
+  product        product @relation(fields: [product_id], references: [pid])
+  colour_id      Int
+  colour         colour  @relation(fields: [colour_id], references: [cid])
+
+  product_image     product_image[]
+  product_variation product_variation[]
+}
+
+model size_option {
+  sid               Int                 @id @default(autoincrement())
+  size_name         String
+  sort_order        Int
+  product_variation product_variation[]
+}
+
+model product_variation {
+  pvid            Int          @id @default(autoincrement())
+  product_item_id Int
+  product_item    product_item @relation(fields: [product_item_id], references: [piid])
+  qty_in_stock    Int
+  size_id         Int
+  size_option     size_option  @relation(fields: [size_id], references: [sid])
+}
