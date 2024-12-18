@@ -1,1 +1,1 @@
-{"root":["./src/app.ts","./src/index.ts"],"version":"5.7.2"}
+{"root":["./src/app.ts","./src/index.ts","./src/controller/product_gender.controller.ts","./src/model/prisma.config.ts","./src/route/product_gender.route.ts","./src/service/product_gender.service.ts","./src/utils/error.ts"],"version":"5.7.2"}

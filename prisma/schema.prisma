@@ -13,18 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model product_gender {
-  pgid             Int                @id @default(autoincrement())
-  gender_name      String             @unique @db.VarChar(10)
+model section {
+  sid              Int                @id @default(autoincrement())
+  section_name     String             @unique @db.VarChar(10)
   product_category product_category[]
 }
 
 model product_category {
-  pcid              Int            @id @default(autoincrement())
-  product_gender_id Int
-  category_name     String         @db.VarChar(100)
-  product_gender    product_gender @relation(fields: [product_gender_id], references: [pgid])
-  product           product[]
+  pcid          Int       @id @default(autoincrement())
+  section_id    Int
+  category_name String    @db.VarChar(100)
+  section       section   @relation(fields: [section_id], references: [sid])
+  product       product[]
 }
 
 model product {

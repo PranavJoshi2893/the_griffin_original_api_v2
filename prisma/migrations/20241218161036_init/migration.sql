@@ -1,15 +1,15 @@
 -- CreateTable
-CREATE TABLE "product_gender" (
-    "pgid" SERIAL NOT NULL,
-    "gender_name" VARCHAR(10) NOT NULL,
+CREATE TABLE "section" (
+    "sid" SERIAL NOT NULL,
+    "section_name" VARCHAR(10) NOT NULL,
 
-    CONSTRAINT "product_gender_pkey" PRIMARY KEY ("pgid")
+    CONSTRAINT "section_pkey" PRIMARY KEY ("sid")
 );
 
 -- CreateTable
 CREATE TABLE "product_category" (
     "pcid" SERIAL NOT NULL,
-    "product_gender_id" INTEGER NOT NULL,
+    "section_id" INTEGER NOT NULL,
     "category_name" VARCHAR(100) NOT NULL,
 
     CONSTRAINT "product_category_pkey" PRIMARY KEY ("pcid")
@@ -72,10 +72,10 @@ CREATE TABLE "product_variation" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "product_gender_gender_name_key" ON "product_gender"("gender_name");
+CREATE UNIQUE INDEX "section_section_name_key" ON "section"("section_name");
 
 -- AddForeignKey
-ALTER TABLE "product_category" ADD CONSTRAINT "product_category_product_gender_id_fkey" FOREIGN KEY ("product_gender_id") REFERENCES "product_gender"("pgid") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "product_category" ADD CONSTRAINT "product_category_section_id_fkey" FOREIGN KEY ("section_id") REFERENCES "section"("sid") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "product" ADD CONSTRAINT "product_product_category_id_fkey" FOREIGN KEY ("product_category_id") REFERENCES "product_category"("pcid") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { AppError } from "../utils/error";
-import * as productGenderService from "../service/product_gender.service";
+import * as sectionService from "../service/section.service";
 
-async function createGender(req: Request, res: Response) {
+async function createSection(req: Request, res: Response) {
   try {
-    const result = await productGenderService.createGender(req.body);
+    const result = await sectionService.createSection(req.body);
     return res.status(201).json(result);
   } catch (e) {
     if (e instanceof AppError) {
@@ -14,9 +14,9 @@ async function createGender(req: Request, res: Response) {
   }
 }
 
-async function getGender(req: Request, res: Response) {
+async function getSection(req: Request, res: Response) {
   try {
-    const result = await productGenderService.getGender(
+    const result = await sectionService.getSection(
       parseInt(req.params["id"])
     );
 
@@ -29,9 +29,9 @@ async function getGender(req: Request, res: Response) {
   }
 }
 
-async function getAllGender(req: Request, res: Response) {
+async function getAllSections(req: Request, res: Response) {
   try {
-    const result = await productGenderService.getAllGender();
+    const result = await sectionService.getAllSections();
     return res.status(200).json(result);
   } catch (e) {
     if (e instanceof AppError) {
@@ -41,9 +41,9 @@ async function getAllGender(req: Request, res: Response) {
   }
 }
 
-async function updateGender(req: Request, res: Response) {
+async function updateSection(req: Request, res: Response) {
   try {
-    const result = await productGenderService.updateGender(
+    const result = await sectionService.updateSection(
       req.body,
       parseInt(req.params["id"])
     );
@@ -56,9 +56,9 @@ async function updateGender(req: Request, res: Response) {
   }
 }
 
-async function deleteGender(req: Request, res: Response) {
+async function deleteSection(req: Request, res: Response) {
   try {
-    const result = await productGenderService.deleteGender(
+    const result = await sectionService.deleteSection(
       parseInt(req.params["id"])
     );
     return res.status(200).json(result);
@@ -70,4 +70,4 @@ async function deleteGender(req: Request, res: Response) {
   }
 }
 
-export { createGender, getGender, getAllGender, updateGender, deleteGender };
+export { createSection, getSection, getAllSections, updateSection, deleteSection };
