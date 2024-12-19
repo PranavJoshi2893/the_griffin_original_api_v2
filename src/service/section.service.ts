@@ -3,6 +3,7 @@ import { BadRequestError, ConflictError } from "../utils/error";
 import prisma from "../model/prisma.config";
 
 interface ISection {
+  section_id: number;
   section_name: string;
 }
 
@@ -29,7 +30,9 @@ async function getSection(id: number) {
 
     return section;
   } catch (e) {
-    throw new BadRequestError("Something bad happened during retriving section");
+    throw new BadRequestError(
+      "Something bad happened during retriving section"
+    );
   }
 }
 
@@ -51,7 +54,7 @@ async function updateSection(section: ISection, id: number) {
       data: section,
     });
 
-    return { message: "section information updated" }
+    return { message: "section information updated" };
   } catch (e) {
     throw new BadRequestError("Somthing bad happened during updating section");
   }
@@ -62,9 +65,19 @@ async function deleteSection(id: number) {
     await prisma.section.delete({
       where: { sid: id },
     });
+
+    return { message: "Section delete Successfully" };
   } catch (e) {
-    throw new BadRequestError("Somthing bad happened during deleting selection");
+    throw new BadRequestError(
+      "Somthing bad happened during deleting selection"
+    );
   }
 }
 
-export { createSection, getSection, getAllSections, updateSection, deleteSection };
+export {
+  createSection,
+  getSection,
+  getAllSections,
+  updateSection,
+  deleteSection,
+};
