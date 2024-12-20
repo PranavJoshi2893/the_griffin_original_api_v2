@@ -42,13 +42,14 @@ async function getCategory(id: number) {
 async function getAllCategories() {
   const categories = await prisma.product_category.findMany({
     select: {
+      pcid: true,
+      category_name: true,
       section: {
         select: {
           sid: true,
           section_name: true,
         },
       },
-      category_name: true,
     },
   });
 
