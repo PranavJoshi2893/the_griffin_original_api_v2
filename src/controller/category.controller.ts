@@ -8,11 +8,9 @@ async function createCategory(req: Request, res: Response) {
     return res.status(201).json(result);
   } catch (e) {
     if (e instanceof AppError) {
-      if (e instanceof AppError) {
-        return res.status(e.statusCode).json({ error: e.message });
-      }
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res.status(e.statusCode).json({ error: e.message });
     }
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -24,11 +22,9 @@ async function getCategory(req: Request, res: Response) {
     return res.status(200).json(result);
   } catch (e) {
     if (e instanceof AppError) {
-      if (e instanceof AppError) {
-        return res.status(e.statusCode).json({ error: e.message });
-      }
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res.status(e.statusCode).json({ error: e.message });
     }
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -38,11 +34,9 @@ async function getAllCategories(req: Request, res: Response) {
     return res.status(200).json(result);
   } catch (e) {
     if (e instanceof AppError) {
-      if (e instanceof AppError) {
-        return res.status(e.statusCode).json({ error: e.message });
-      }
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res.status(e.statusCode).json({ error: e.message });
     }
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -55,11 +49,9 @@ async function updateCategory(req: Request, res: Response) {
     return res.status(200).json(result);
   } catch (e) {
     if (e instanceof AppError) {
-      if (e instanceof AppError) {
-        return res.status(e.statusCode).json({ error: e.message });
-      }
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res.status(e.statusCode).json({ error: e.message });
     }
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
@@ -71,11 +63,9 @@ async function deleteCategory(req: Request, res: Response) {
     return res.status(200).json(result);
   } catch (e) {
     if (e instanceof AppError) {
-      if (e instanceof AppError) {
-        return res.status(e.statusCode).json({ error: e.message });
-      }
-      return res.status(500).json({ error: "Internal Server Error" });
+      return res.status(e.statusCode).json({ error: e.message });
     }
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
 
