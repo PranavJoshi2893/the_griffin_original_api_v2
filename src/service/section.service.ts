@@ -68,6 +68,12 @@ async function deleteSection(id: number) {
 
     return { message: "Section delete Successfully" };
   } catch (e) {
+    if (e instanceof PrismaClientKnownRequestError) {
+      if (e.code === "P2003")
+        throw new BadRequestError(
+          "You cannot delete this record because it has associated data in other tables."
+        );
+    }
     throw new BadRequestError(
       "Somthing bad happened during deleting selection"
     );
