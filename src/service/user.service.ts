@@ -1,6 +1,10 @@
 import { compare, hash } from "bcrypt";
 import prisma from "../model/prisma.config";
 import { BadRequestError, ForbiddenError, NotFoundError } from "../utils/error";
+import {
+  accessTokenGenerator,
+  refreshTokenGenerator,
+} from "../utils/jwt_generator";
 
 interface IUser {
   first_name: string;
@@ -48,7 +52,10 @@ async function loginUser(userInfo: IUser) {
 
   if (!isMatched) throw new ForbiddenError("Invalid Password");
 
-  return { message: "Login Successful!" };
+  const access_token = accessTokenGenerator({ sub: user.uid });
+  const refresh_token = refreshTokenGenerator({ sub: user.uid });
+
+  return { message: "Login Successful!", access_token, refresh_token };
 }
 
 async function getAllUsers() {

@@ -1,18 +1,1 @@
-{
-  "root": [
-    "./src/app.ts",
-    "./src/index.ts",
-    "./src/controller/category.controller.ts",
-    "./src/controller/section.controller.ts",
-    "./src/controller/user.controller.ts",
-    "./src/model/prisma.config.ts",
-    "./src/route/category.route.ts",
-    "./src/route/section.route.ts",
-    "./src/route/user.route.ts",
-    "./src/service/category.service.ts",
-    "./src/service/section.service.ts",
-    "./src/service/user.service.ts",
-    "./src/utils/error.ts"
-  ],
-  "version": "5.7.2"
-}
+{"root":["./src/app.ts","./src/index.ts","./src/controller/category.controller.ts","./src/controller/section.controller.ts","./src/controller/user.controller.ts","./src/middleware/at_verification.middleware.ts","./src/middleware/rt_verification.middleware.ts","./src/model/prisma.config.ts","./src/route/category.route.ts","./src/route/section.route.ts","./src/route/user.route.ts","./src/service/category.service.ts","./src/service/section.service.ts","./src/service/user.service.ts","./src/utils/error.ts","./src/utils/jwt_generator.ts"],"version":"5.7.2"}
