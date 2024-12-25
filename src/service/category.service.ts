@@ -2,14 +2,20 @@ import prisma from "../model/prisma.config";
 import { BadRequestError } from "../utils/error";
 
 interface ICategory {
-  section_id: number;
   category_name: string;
+  size_category_id: number | undefined;
+  parent_category_id: number | undefined;
 }
 
 async function createCategory(category: ICategory) {
   try {
+    const { category_name, size_category_id, parent_category_id } = category;
     await prisma.product_category.create({
-      data: category,
+      data: {
+        category_name,
+        size_category_id,
+        parent_category_id,
+      },
     });
 
     return { message: "Category added Successfully!" };
@@ -22,14 +28,8 @@ async function getCategory(id: number) {
   try {
     const category = await prisma.product_category.findUnique({
       where: { pcid: id },
-      select: {
-        section: {
-          select: {
-            sid: true,
-            section_name: true,
-          },
-        },
-        category_name: true,
+      include: {
+        product_category: true,
       },
     });
 
@@ -41,15 +41,10 @@ async function getCategory(id: number) {
 
 async function getAllCategories() {
   const categories = await prisma.product_category.findMany({
+    where: { parent_category_id: null },
     select: {
       pcid: true,
       category_name: true,
-      section: {
-        select: {
-          sid: true,
-          section_name: true,
-        },
-      },
     },
   });
 

@@ -13,26 +13,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model section {
-  sid              Int                @id @default(autoincrement())
-  section_name     String             @unique @db.VarChar(10)
-  product_category product_category[]
-}
-
 model product_category {
-  pcid          Int       @id @default(autoincrement())
-  section_id    Int
-  category_name String    @db.VarChar(100)
-  section       section   @relation(fields: [section_id], references: [sid])
-  product       product[]
+  pcid               Int                @id @default(autoincrement())
+  category_name      String             @db.VarChar(100)
+  size_category_id   Int?
+  size_category      size_category?     @relation(fields: [size_category_id], references: [sid])
+  product            product[]
+  parent_category_id Int?
+  product_category   product_category?  @relation("CategoryHierarchy", fields: [parent_category_id], references: [pcid])
+  children           product_category[] @relation("CategoryHierarchy")
 }
 
 model product {
-  pid                 Int              @id @default(autoincrement())
-  product_name        String           @db.VarChar(500)
+  pid                 Int                 @id @default(autoincrement())
+  product_name        String              @db.VarChar(500)
+  product_description String
   product_category_id Int
-  product_category    product_category @relation(fields: [product_category_id], references: [pcid])
+  product_category    product_category    @relation(fields: [product_category_id], references: [pcid])
   product_item        product_item[]
+  product_attribute   product_attribute[]
 }
 
 model product_image {
@@ -52,6 +51,7 @@ model product_item {
   piid           Int     @id @default(autoincrement())
   original_price Int
   sale_price     Int
+  product_code   Int
   product_id     Int
   product        product @relation(fields: [product_id], references: [pid])
   colour_id      Int
@@ -66,6 +66,8 @@ model size_option {
   size_name         String
   sort_order        Int
   product_variation product_variation[]
+  size_category_id  Int
+  size_category     size_category       @relation(fields: [size_category_id], references: [sid])
 }
 
 model product_variation {
@@ -75,6 +77,36 @@ model product_variation {
   qty_in_stock    Int
   size_id         Int
   size_option     size_option  @relation(fields: [size_id], references: [sid])
+}
+
+model size_category {
+  sid                Int                @id @default(autoincrement())
+  size_category_name String
+  size_option        size_option[]
+  product_category   product_category[]
+}
+
+model attribute_type {
+  aid              Int                @id @default(autoincrement())
+  attribute_name   String
+  attribute_option attribute_option[]
+}
+
+model attribute_option {
+  aid                   Int                 @id @default(autoincrement())
+  attribute_type_id     Int
+  attribute_type        attribute_type      @relation(fields: [attribute_type_id], references: [aid])
+  attribute_option_name String
+  product_attribute     product_attribute[]
+}
+
+model product_attribute {
+  product_id          Int
+  product             product          @relation(fields: [product_id], references: [pid])
+  attribute_option_id Int
+  attribute_option    attribute_option @relation(fields: [attribute_option_id], references: [aid])
+
+  @@id([product_id, attribute_option_id])
 }
 
 model User {

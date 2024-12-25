@@ -74,6 +74,18 @@ async function deleteUser(req: Request, res: Response) {
   }
 }
 
+async function refresh(req: Request, res: Response) {
+  try {
+    const result = await userService.refresh(req.body.sub);
+    return res.status(200).json(result);
+  } catch (e) {
+    if (e instanceof AppError) {
+      return res.status(e.statusCode).json({ error: e.message });
+    }
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 export {
   registerUser,
   loginUser,
@@ -81,4 +93,5 @@ export {
   deleteUser,
   getUser,
   updateUser,
+  refresh,
 };

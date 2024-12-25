@@ -113,6 +113,11 @@ async function deleteUser(id: string) {
   }
 }
 
+async function refresh(sub: string) {
+  const payload = { sub };
+  return { access_token: accessTokenGenerator(payload) };
+}
+
 export {
   registerUser,
   loginUser,
@@ -120,4 +125,5 @@ export {
   deleteUser,
   getUser,
   updateUser,
+  refresh,
 };
