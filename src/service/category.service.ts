@@ -28,8 +28,13 @@ async function getCategory(id: number) {
   try {
     const category = await prisma.product_category.findUnique({
       where: { pcid: id },
-      include: {
-        product_category: true,
+      select: {
+        children: {
+          select: {
+            pcid: true,
+            category_name: true,
+          },
+        },
       },
     });
 
